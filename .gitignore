@@ -1,0 +1,14 @@
+# User-specific stuff
+**/*.tlog
+**/*.lastbuidstate
+**/*.log
+**/*.obj
+**/*.idb
+**/*.pdb
+**/*.vcxproj
+**/*.vcxproj.filters
+**/*.vcxproj.user
+**/*.sln
+**/.vs/**
+**/x64/**
+**/Debug/**
