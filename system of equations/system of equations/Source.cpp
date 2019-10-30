@@ -5,46 +5,87 @@
 #include <ctime>
 #include <iomanip>
 
-double* LineSum(double* a, double * b, double n, double mult) {
+void LineSum(double* a, double * b, double n, double mult) {
 	for (int i = 0; i < n; i++) {
 		a[i] += b[i] * mult;
 		if (abs(a[i]) < 0.0000000001) a[i] = 0;
 	}
-	return a;
 }
 
+void LineSwap(double** a, int t, int h, int n) {
+	for (int i = 0; i < n; i++) {
+		std::swap(a[t][i], a[h][i]);
+	}
+}
+
+void Gauss(double** matrix, int n , double** invers) {
+	for (int i = 0; i < n; i++) {
+		if (matrix[i][i] == 0) {
+			for (int j = i + 1; j < n; j++) {
+				if (matrix[j][i] != 0) {
+					LineSwap(matrix, i, j, n + 1);
+					LineSwap(invers, i, j, n);
+					break;
+				}
+			}
+		}
+		for (int j = i + 1; j < n; j++) {
+			double tmp = (matrix[j][i] / matrix[i][i]) * -1;
+			LineSum(matrix[j], matrix[i], n + 1, tmp);
+			LineSum(invers[j], invers[i], n, tmp);
+		}
+	}
+}
+
+void MatCopy(double** a, double** b, int n) {
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			b[i][j] = a[i][j];
+		}
+	}
+}
 int main() {
 	srand(time(0));
 	std::ifstream input("input.txt");
 	int n;
 	n = 10;
 	double** matrix = new double*[n];
+	double** A = new double* [n];
+	double* X = new double[n];
 	for (int i = 0; i < n; i++) {
 		matrix[i] = new double[n + 1];
+		A[i] = new double[n];
 	}
-	double** obr = new double* [n];
+	double** invers = new double* [n];
 	for (int i = 0; i < n; i++) {
-		obr[i] = new double[n];
+		invers[i] = new double[n];
 	}
 	for (int i = 0; i < n; i++) {
 		for (int j = 0; j < n; j++) {
-			obr[i][j] = 0;
+			invers[i][j] = 0;
 		}
-		obr[i][i] = 1;
+		invers[i][i] = 1;
 	}
-
 	//matrix input
 	for (int i = 0; i < n; i++) {
 		for (int j = 0; j < n; j++) {
 			matrix[i][j] = (rand()%1001)/100.;
+			//matrix[i][j] = (rand() % 10);
 		}
 	}
+	MatCopy(matrix, A, n);
+	//X input
 
-	//vector input
 	for (int i = 0; i < n; i++) {
-		matrix[i][n] = (rand() % 1001) / 100.;;
+		X[i] = (rand()%1001)/100.;
 	}
-
+	for (int i = 0; i < n; i++) {
+		double temp = 0;
+		for (int j = 0; j < n; j++) {
+			temp += matrix[i][j] * X[j];
+		}
+		matrix[i][n] = temp;
+	}
 	//first matrix output
 	for (int i = 0; i < n; i++) {
 		for (int j = 0; j < n; j++) {
@@ -62,50 +103,10 @@ int main() {
 	///////////////////////////////////////////////////////////////////////////////////////////////////
 
 	//Gauss method
-	int z = 0;
-	for (int i = 0; i < n, z < n; i++ , z++) {
-
-		bool good = true;
-		if (matrix[i][z] == 0) {
-			good = false;
-
-			for (int j = i + 1; j < n; j++) {
-				if (matrix[j][z] != 0) {
-					LineSum(matrix[i], matrix[j], n + 1, 1);
-					good = true;
-					break;
-				}
-			}
-
-		}
-		if (!good) {
-			z++;
-			continue;
-		}
-
-		for (int j = i + 1; j < n; j++) {
-			double tmp = (matrix[j][z] / matrix[i][z]) * -1;
-			LineSum(matrix[j], matrix[i], 1 + n, tmp);
-			LineSum(obr[j], obr[i], n, tmp);
-		}
-
-		/*for (int i = 0; i < n; i++) {
-			for (int j = 0; j < n; j++) {
-				std::cout << std::setprecision(2) << std::setw(9) << obr[i][j];
-			}
-			std::cout << '\n';
-			std::cout << '\n';
-		}
-		for (int i = 0; i < (n + 1) * 10; i++) {
-			std::cout << '-';
-		}
-		std::cout << '\n';
-		std::cout << '\n';*/
-	}
+	Gauss(matrix, n , invers);
 	double* answer = new double[n];
-	z--;
 
-
+	
 	//output after method
 	for (int i = 0; i < n; i++) {
 		for (int j = 0; j < n; j++) {
@@ -121,6 +122,8 @@ int main() {
 	}
 	std::cout << '\n';
 	std::cout << '\n';
+
+
 	///////////////////////////////////////////////////////////////////////////////////////////////////
 
 	
@@ -153,13 +156,19 @@ int main() {
 		}
 	}
 	//answer output
+	double res = 0;
+
 	for (int i = 0; i < n; i++) {
 		std::cout << 'x' << i << ':';
-		std::cout << std::setprecision(2) << std::setw(9)  << answer[i]<<"\n";
+		std::cout << std::setprecision(20) << std::setw(24)  << answer[i];
+		std::cout << std::setw(5)<< 'X' << i << ':';
+		std::cout << std::setprecision(20) << std::setw(24) << X[i] << "\n";
+		res = std::max(res, abs(X[i] - answer[i]));
 	}
 
 	std::cout << '\n';
 	std::cout << '\n';
+	std::cout <<"residual :"<< res << "\n\n";
 	for (int i = 0; i < (n + 1) * 10; i++) {
 		std::cout << '-';
 	}
@@ -172,7 +181,7 @@ int main() {
 	for (int i = 0; i < n; i++) {
 		det *= matrix[i][i];
 	}
-	std::cout << "determinant : " << std::setprecision(10) << std::setw(10) << det << "\n";
+	std::cout << "determinant : " << std::setprecision(10) << std::setw(10) << det;
 
 	std::cout << '\n';
 	std::cout << '\n';
@@ -190,7 +199,7 @@ int main() {
 			f[i] += matrix[i][j] * answer[j];
 		}
 	}
-	double res = 0;
+	res = 0;
 	//table for residual
 	for (int i = 0; i < n; i++) {
 		if (abs(f[i] - matrix[i][n]) > res) {
@@ -217,14 +226,40 @@ int main() {
 	for (int i = 1; i < n; i++) {
 		for (int j = i - 1; j >= 0; j--) {
 			double tmp = (matrix[j][i] / matrix[i][i]) * -1;
-			LineSum(matrix[j], matrix[i], 1 + n, (matrix[j][i] / matrix[i][i]) * -1);
-			LineSum(obr[j], obr[i], n, tmp);
+			LineSum(matrix[j], matrix[i], n + 1, (matrix[j][i] / matrix[i][i]) * -1);
+			LineSum(invers[j], invers[i], n, tmp);
 		}
 	}
 
 	for (int i = 0; i < n; i++) {
 		for (int j = 0; j < n; j++) {
-			std::cout << std::setprecision(2) << std::setw(9) << obr[i][j];
+			invers[i][j] /= matrix[i][i];
+		}
+	}
+	std::cout << "inverse :\n\n";
+
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			std::cout << std::setprecision(2) << std::setw(9) << invers[i][j];
+		}
+		std::cout << '\n';
+		std::cout << '\n';
+	}
+
+	for (int i = 0; i < (n + 1) * 10; i++) {
+		std::cout << '-';
+	}
+	std::cout << '\n';
+	std::cout << '\n';
+	std::cout << "A^(-1) x A :\n\n";
+
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			double temp = 0;
+			for (int h = 0; h < n; h++) {
+				temp += invers[i][h] * A[h][j];
+			}
+			std::cout << std::setprecision(2) << std::setw(9) << temp;
 		}
 		std::cout << '\n';
 		std::cout << '\n';
