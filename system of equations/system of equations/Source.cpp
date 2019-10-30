@@ -20,15 +20,16 @@ void LineSwap(double** a, int t, int h, int n) {
 
 void Gauss(double** matrix, int n , double** invers) {
 	for (int i = 0; i < n; i++) {
-		if (matrix[i][i] == 0) {
-			for (int j = i + 1; j < n; j++) {
-				if (matrix[j][i] != 0) {
-					LineSwap(matrix, i, j, n + 1);
-					LineSwap(invers, i, j, n);
-					break;
-				}
+		int MainE = 0;
+		int MainI = i;
+		for (int j = i; j < n; j++) {
+			if (abs(matrix[j][i]) > MainE) {
+				MainE = matrix[j][i];
+				MainI = j;
 			}
 		}
+		LineSwap(matrix, i, MainI, n + 1);
+		LineSwap(invers, i, MainI, n);
 		for (int j = i + 1; j < n; j++) {
 			double tmp = (matrix[j][i] / matrix[i][i]) * -1;
 			LineSum(matrix[j], matrix[i], n + 1, tmp);
