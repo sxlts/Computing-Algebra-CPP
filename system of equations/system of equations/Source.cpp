@@ -5,6 +5,8 @@
 #include <ctime>
 #include <iomanip>
 
+using namespace std;
+
 void LineSum(double* a, double * b, double n, double mult) {
 	for (int i = 0; i < n; i++) {
 		a[i] += b[i] * mult;
@@ -14,7 +16,7 @@ void LineSum(double* a, double * b, double n, double mult) {
 
 void LineSwap(double** a, int t, int h, int n) {
 	for (int i = 0; i < n; i++) {
-		std::swap(a[t][i], a[h][i]);
+		swap(a[t][i], a[h][i]);
 	}
 }
 
@@ -47,7 +49,7 @@ void MatCopy(double** a, double** b, int n) {
 }
 int main() {
 	srand(time(0));
-	std::ifstream input("input.txt");
+	ofstream cout("output.txt");
 	int n;
 	n = 10;
 	double** matrix = new double*[n];
@@ -90,17 +92,17 @@ int main() {
 	//first matrix output
 	for (int i = 0; i < n; i++) {
 		for (int j = 0; j < n; j++) {
-			std::cout << std::setprecision(2) << std::setw(9) << matrix[i][j];
+			cout << setprecision(2) << setw(9) << matrix[i][j];
 		}
-		std::cout << " |" << std::setprecision(2) << std::setw(9) << matrix[i][n];
-		std::cout << '\n';
-		std::cout << '\n';
+		cout << " |" << setprecision(2) << setw(9) << matrix[i][n];
+		cout << '\n';
+		cout << '\n';
 	}
 	for (int i = 0; i < (n + 1) * 10; i++) {
-		std::cout << '-';
+		cout << '-';
 	}
-	std::cout << '\n';
-	std::cout << '\n';
+	cout << '\n';
+	cout << '\n';
 	///////////////////////////////////////////////////////////////////////////////////////////////////
 
 	//Gauss method
@@ -111,18 +113,18 @@ int main() {
 	//output after method
 	for (int i = 0; i < n; i++) {
 		for (int j = 0; j < n; j++) {
-			std::cout << std::setprecision(2) << std::setw(9) << matrix[i][j];
+			cout << setprecision(2) << setw(9) << matrix[i][j];
 		}
 		answer[i] = matrix[i][n];
-		std::cout << " |" << std::setprecision(2) << std::setw(9) << matrix[i][n];
-		std::cout << '\n';
-		std::cout << '\n';
+		cout << " |" << setprecision(2) << setw(9) << matrix[i][n];
+		cout << '\n';
+		cout << '\n';
 	}
 	for (int i = 0; i < (n+1) * 10; i++) {
-		std::cout << '-';
+		cout << '-';
 	}
-	std::cout << '\n';
-	std::cout << '\n';
+	cout << '\n';
+	cout << '\n';
 
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -138,7 +140,7 @@ int main() {
 				}
 			}
 			if (!good) {
-				std::cout << " matrix is not competible \n";
+				cout << " matrix is not competible \n";
 				return 0;
 			}
 		}
@@ -152,7 +154,7 @@ int main() {
 		}
 		answer[i] /= matrix[i][i];
 		if (matrix[i][i] == 0) {
-			std::cout << "variable x" << i + 1 << " is independent (=1 for answer)\n";
+			cout << "variable x" << i + 1 << " is independent (=1 for answer)\n";
 			answer[i] = 1;
 		}
 	}
@@ -160,21 +162,21 @@ int main() {
 	double res = 0;
 
 	for (int i = 0; i < n; i++) {
-		std::cout << 'x' << i << ':';
-		std::cout << std::setprecision(20) << std::setw(24)  << answer[i];
-		std::cout << std::setw(5)<< 'X' << i << ':';
-		std::cout << std::setprecision(20) << std::setw(24) << X[i] << "\n";
-		res = std::max(res, abs(X[i] - answer[i]));
+		cout << 'x' << i << ':';
+		cout << setprecision(20) << setw(24)  << answer[i];
+		cout << setw(5)<< 'X' << i << ':';
+		cout << setprecision(20) << setw(24) << X[i] << "\n";
+		res = max(res, abs(X[i] - answer[i]));
 	}
 
-	std::cout << '\n';
-	std::cout << '\n';
-	std::cout <<"residual :"<< res << "\n\n";
+	cout << '\n';
+	cout << '\n';
+	cout <<"residual :"<< res << "\n\n";
 	for (int i = 0; i < (n + 1) * 10; i++) {
-		std::cout << '-';
+		cout << '-';
 	}
-	std::cout << '\n';
-	std::cout << '\n';
+	cout << '\n';
+	cout << '\n';
 	///////////////////////////////////////////////////////////////////////////////////////////////////
 
 	//get determinant
@@ -182,15 +184,15 @@ int main() {
 	for (int i = 0; i < n; i++) {
 		det *= matrix[i][i];
 	}
-	std::cout << "determinant : " << std::setprecision(10) << std::setw(10) << det;
+	cout << "determinant : " << setprecision(10) << setw(10) << det;
 
-	std::cout << '\n';
-	std::cout << '\n';
+	cout << '\n';
+	cout << '\n';
 	for (int i = 0; i < (n + 1) * 10; i++) {
-		std::cout << '-';
+		cout << '-';
 	}
-	std::cout << '\n';
-	std::cout << '\n';
+	cout << '\n';
+	cout << '\n';
 	///////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	double* f = new double[n];
@@ -206,22 +208,22 @@ int main() {
 		if (abs(f[i] - matrix[i][n]) > res) {
 			res = f[i] - matrix[i][n];
 		}
-		std::cout << "Ax" << i << ':';
-		std::cout << std::setprecision(20) << std::setw(24) << f[i];
-		std::cout << std::setw(5)<< 'f' << i << ':';
-		std::cout << std::setprecision(20) << std::setw(24) << matrix[i][n] << "\n";
+		cout << "Ax" << i << ':';
+		cout << setprecision(20) << setw(24) << f[i];
+		cout << setw(5)<< 'f' << i << ':';
+		cout << setprecision(20) << setw(24) << matrix[i][n] << "\n";
 	}
-	std::cout << '\n';
-	std::cout << '\n';
+	cout << '\n';
+	cout << '\n';
 	//residual output
-	std::cout << std::setprecision(7) << std::setw(9) <<"residual : "<< res;
-	std::cout << '\n';
-	std::cout << '\n';
+	cout << setprecision(7) << setw(9) <<"residual : "<< res;
+	cout << '\n';
+	cout << '\n';
 	for (int i = 0; i < (n + 1) * 10; i++) {
-		std::cout << '-';
+		cout << '-';
 	}
-	std::cout << '\n';
-	std::cout << '\n';
+	cout << '\n';
+	cout << '\n';
 	///////////////////////////////////////////////////////////////////////////////////////////////////
 
 	for (int i = 1; i < n; i++) {
@@ -237,22 +239,22 @@ int main() {
 			invers[i][j] /= matrix[i][i];
 		}
 	}
-	std::cout << "inverse :\n\n";
+	cout << "inverse :\n\n";
 
 	for (int i = 0; i < n; i++) {
 		for (int j = 0; j < n; j++) {
-			std::cout << std::setprecision(2) << std::setw(9) << invers[i][j];
+			cout << setprecision(2) << setw(9) << invers[i][j];
 		}
-		std::cout << '\n';
-		std::cout << '\n';
+		cout << '\n';
+		cout << '\n';
 	}
 
 	for (int i = 0; i < (n + 1) * 10; i++) {
-		std::cout << '-';
+		cout << '-';
 	}
-	std::cout << '\n';
-	std::cout << '\n';
-	std::cout << "A^(-1) x A :\n\n";
+	cout << '\n';
+	cout << '\n';
+	cout << "A^(-1) x A :\n\n";
 
 	for (int i = 0; i < n; i++) {
 		for (int j = 0; j < n; j++) {
@@ -260,9 +262,9 @@ int main() {
 			for (int h = 0; h < n; h++) {
 				temp += invers[i][h] * A[h][j];
 			}
-			std::cout << std::setprecision(2) << std::setw(9) << temp;
+			cout << setprecision(2) << setw(9) << temp;
 		}
-		std::cout << '\n';
-		std::cout << '\n';
+		cout << '\n';
+		cout << '\n';
 	}
 }
