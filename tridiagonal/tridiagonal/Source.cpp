@@ -51,11 +51,16 @@ int main() {
 			matrix[i][j] = (rand() % 1001) / 100.;
 			if (rand() % 2 == 1) matrix[i][j] *= -1;
 		}
+		matrix[i][i] = abs(matrix[i][i-1]) + abs(matrix[i][i+1]) + (rand() % 1001) / 100.;
 		for (int j = i + 2; j < n; j++) {
 			matrix[i][j] = 0;
 		}
 		
 	}
+	matrix[0][1] = (rand() % 1001) / 100.;
+	matrix[0][0] = abs(matrix[0][1]) + (rand() % 1001) / 100.;
+	matrix[n - 1][n - 2] = (rand() % 1001) / 100.;
+	matrix[n - 1][n - 1] = abs(matrix[n - 1][n - 2]) + (rand() % 1001) / 100.;
 	MatCopy(matrix, A, n);
 	//X input
 
