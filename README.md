@@ -1,4 +1,7 @@
 # Computing-Algebra-CPP
 
-Lab1 - Gauss method("/system of equations")
-Lab2 - tridiagonal matrix algorithm("/tridiagonal")
+Lab1 - Gauss method("system of equations")
+
+Lab2 - tridiagonal matrix algorithm("tridiagonal")
+
+Lab3 - Relaxation method("relaxation")
