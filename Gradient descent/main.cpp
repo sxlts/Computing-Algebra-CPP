@@ -34,7 +34,7 @@ vector<vector<double>>  GetSquare(const vector<vector<double>>& matrix){
 
 double scalarMultiply(const vector<double>& x1 , const vector<double>& x2){
     double ret = 0;
-    for (int i = 0 ; i < x1.size() ; i++){
+    for (int i = 0 ; i < n ; i++){
         ret += x1[i] * x2[i];
     }
     return ret;
@@ -42,7 +42,7 @@ double scalarMultiply(const vector<double>& x1 , const vector<double>& x2){
 
 vector<double> minus_(const vector<double>& x1 , const vector<double>& x2){
     vector<double> ret = x1;
-    for (int i = 0 ; i < x1.size() ; i++){
+    for (int i = 0 ; i < n ; i++){
         ret[i] -= x2[i];
     }
     return ret;
@@ -50,16 +50,16 @@ vector<double> minus_(const vector<double>& x1 , const vector<double>& x2){
 
 vector<double> multiply_(const vector<double>& x1 , double m){
     vector<double> ret = x1;
-    for (int i = 0 ; i < x1.size() ; i++){
+    for (int i = 0 ; i < n ; i++){
         ret[i] *= m;
     }
     return ret;
 }
 vector<double> multMatrixVector(const vector<vector<double>>& matrix , const vector<double>& x){
     vector<double> ret;
-    ret.resize(x.size(),0);
-    for(int i =0;i<x.size();i++){
-        for(int j =0;j<x.size();j++){
+    ret.resize(n,0);
+    for(int i =0;i<n;i++){
+        for(int j =0;j<n;j++){
             ret[i] += x[j]*matrix[i][j];
         }
     }
@@ -85,7 +85,7 @@ vector<double> descent(const vector<vector<double>>& matrix , const vector<doubl
 
         newX = minus_(X, multiply_(R,scalarMultiply(R,R) / scalarMultiply( multMatrixVector(matrix,R) , R)));
 
-        for(int i =0;i < X.size();i++){
+        for(int i =0;i < n;i++){
             if(abs(newX[i] - X[i]) > max_){
                 max_ = abs(newX[i] - X[i]);
             }
@@ -188,7 +188,7 @@ int main() {
     }
 
     vector<double> newX;
-    
+
     //do method
     newX = descent(squaredMatrix, squaredMatrixF);
 
