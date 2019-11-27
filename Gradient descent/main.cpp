@@ -188,7 +188,8 @@ int main() {
     }
 
     vector<double> newX;
-
+    
+    //do method
     newX = descent(squaredMatrix, squaredMatrixF);
 
     cout << " number of iterations : " << newX[n];
@@ -200,6 +201,7 @@ int main() {
     cout << '\n';
     cout << '\n';
 
+    //write residual
     double res = 0;
     cout << "compare answers\n\n";
     cout << setw(32)  << "true X" << setw(34)  << "found X\n\n";
