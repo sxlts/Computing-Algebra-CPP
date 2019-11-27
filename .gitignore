@@ -1,4 +1,6 @@
-# User-specific stuff
+
+# MVS
+
 **/*.tlog
 **/*.lastbuidstate
 **/*.log
@@ -12,3 +14,9 @@
 **/.vs/**
 **/x64/**
 **/Debug/**
+
+# CLION
+
+**/cmake-build-debug/**
+**/.idea/**
+**/CMakeLists.txt
