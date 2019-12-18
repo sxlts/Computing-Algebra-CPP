@@ -10,4 +10,4 @@ Lab4 - **Gradient Descent method** *("/Gradient descent")*
 
 Lab5 - **Power Iteration method** *("/Power iteration")*
 
-Lab6 - J**acobi eigenvector/value** *("/Jacobi eigenvector")*
+Lab6 - **Jacobi eigenvector/value** *("/Jacobi eigenvector")*
