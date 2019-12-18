@@ -14,7 +14,7 @@ const double Eps = 5e-7;
 
 int main() {
     ifstream getData("data.txt");
-    //ofstream cout("output.txt");
+    ofstream cout("output.txt");
     if(!getData.is_open()) return 1;
 
     vector<double> temp;
@@ -55,6 +55,7 @@ int main() {
     }
     cout <<"\n";
 
+    //GET SQUARE SUMS
     vector<double> squares;
     squares.resize(n,0);
     for(int i = 0 ; i < n; i++){
@@ -70,22 +71,10 @@ int main() {
         double maxtemp = 0;
         double angle;
 
-
-        for(int i =0 ;i < n ;i++){
-            for(int j =0;j <n;j++){
-                if(i != j && maxtemp < abs(A[i][j])){
-                    maxtemp = abs(A[i][j]);
-                    k = i;
-                    l = j;
-                }
-            }
-        }
-
-
         //FIND MAX
         for(int i = 0 ; i < n; i++){
-            if(maxtemp < abs(squares[i])){
-                maxtemp = abs(squares[i]);
+            if(maxtemp < squares[i]){
+                maxtemp = squares[i];
                 k = i;
             }
         }
@@ -97,12 +86,9 @@ int main() {
             }
         }
 
+        //END
         if(abs(A[k][l]) < Eps) break;
         count ++;
-
-        //CHANGE SQUARES BEFORE ITERATION
-        squares[k]-= A[k][k]*A[k][k]  + A[k][l]*A[k][l];
-        squares[l]+= squares[k];
 
         //GET ANGLE
         angle = atan(2*A[k][l]/(A[k][k]-A[l][l]))/2;
@@ -125,16 +111,25 @@ int main() {
             A[l][i] = cl;
         }
 
-        //CHANGE SQUARES AFTER ITERATION
-        squares[k]+= A[k][k]*A[k][k];
-        squares[l]-= squares[k];
+        //CALCULATE NEW SQUARE SUMS
+        squares[k] = 0;
+        for(int i = 0 ; i < n; i++){
+            if(k!=i)
+                squares[k] += A[k][i]*A[k][i];
+        }
+        squares[l] = 0;
+        for(int i = 0 ; i < n; i++){
+            if(l!=i)
+                squares[l] += A[l][i]*A[l][i];
+        }
+
     }
 
     cout << count <<"\n\n";
     cout << "MATRIX :\n\n";
     for(int i = 0 ; i < n; i++){
         for(int j = 0; j < n ; j++){
-            cout << setprecision(4) << setw(9) << A[i][j] << " ";
+            cout << setprecision(4) << setw(12) << A[i][j] << " ";
         }
         cout << "\n";
     }
