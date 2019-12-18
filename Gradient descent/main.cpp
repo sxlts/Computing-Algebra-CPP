@@ -85,6 +85,7 @@ vector<double> descent(const vector<vector<double>>& matrix , const vector<doubl
 
         newX = minus_(X, multiply_(R,scalarMultiply(R,R) / scalarMultiply( multMatrixVector(matrix,R) , R)));
 
+        //x(k+1) = x(k) - R*(R,R)/(AxR,r)
         for(int i =0;i < n;i++){
             if(abs(newX[i] - X[i]) > max_){
                 max_ = abs(newX[i] - X[i]);

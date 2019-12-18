@@ -72,7 +72,7 @@ vector<double> Relax(const vector<vector<double>>& matrix , const vector<double>
 int main() {
     srand(time(0));
 
-    ofstream cout("output.txt");
+//    ofstream cout("output.txt");
     
     vector<vector<double>> matrix;
     vector<double> temp;
