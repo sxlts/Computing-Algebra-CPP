@@ -179,4 +179,6 @@ int main() {
         cout << "||A*x(i) -Y*x(i)|| = " << setprecision(4) << setw(11) << residual << "\n\n";
     }
 
+    cout.close();
+    return 0;
 }
