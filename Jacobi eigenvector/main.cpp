@@ -65,6 +65,14 @@ int main() {
         }
     }
 
+    vector<vector<double>> T;
+    T.resize(n,temp);
+    for(int i = 0 ; i < n; i++){
+        T[i][i] = 1;
+    }
+
+    vector<vector<double>> A_save = A;
+
     int count = 0;
     while(true){
         int l = 0, k = 0;
@@ -93,6 +101,22 @@ int main() {
         //GET ANGLE
         angle = atan(2*A[k][l]/(A[k][k]-A[l][l]))/2;
 
+        //INITIALIZE T1
+        if(count == 1){
+            T[k][k] = cos(angle);
+            T[l][l] = cos(angle);
+            T[k][l] = sin(angle) * -1;
+            T[l][k] = sin(angle);
+        }
+        else{
+            for(int i =0;i < n;i++){
+                double tk,tl;
+                tk = T[i][k]*cos(angle) + T[i][l]*sin(angle);
+                tl = -1*T[i][k]*sin(angle) + T[i][l]*cos(angle);
+                T[i][k] = tk;
+                T[i][l] = tl;
+            }
+        }
         //A*T = B
         for(int i =0;i < n;i++){
             double bk,bl;
@@ -125,13 +149,30 @@ int main() {
 
     }
 
-    cout << count <<"\n\n";
-    cout << "MATRIX :\n\n";
-    for(int i = 0 ; i < n; i++){
-        for(int j = 0; j < n ; j++){
-            cout << setprecision(4) << setw(12) << A[i][j] << " ";
+    vector<vector<double>> T_check;
+    T_check.resize(n,temp);
+    for(int h =0;h<n;h++) {
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                T_check[i][h]+= A_save[i][j]*T[j][h];
+            }
         }
-        cout << "\n";
     }
-    cout <<"\n";
+
+    cout << "MADE " << count << " ITEARTIONS\n\n";
+    for(int i = 0 ;i < n ; i++){
+        double residual = 0;
+        cout << "FOUND " << setprecision(4) << setw(11) << A[i][i] << " EIGENVALUE\nIT'S EIGENVECTOR : (";
+        for(int j = 0 ; j < n ; j++){
+            cout << " " << setprecision(4) << setw(11) << T[j][i] << " ";
+            if(j + 1 < n) cout << ',';
+            else cout << ")\n";
+
+            if(residual < abs(T[j][i] * A[i][i] - T_check[j][i])){
+                residual = abs(T[j][i] * A[i][i] - T_check[j][i]);
+            }
+        }
+        cout << "||A*x(i) -Y*x(i)|| = " << setprecision(4) << setw(11) << residual << "\n\n";
+    }
+
 }
