@@ -108,7 +108,7 @@ int main() {
             T[k][l] = sin(angle) * -1;
             T[l][k] = sin(angle);
         }
-        else{
+        else{//CALCULATE T(k)*T(k+1)
             for(int i =0;i < n;i++){
                 double tk,tl;
                 tk = T[i][k]*cos(angle) + T[i][l]*sin(angle);
@@ -149,6 +149,7 @@ int main() {
 
     }
 
+    //CALCULATE A*x(i)
     vector<vector<double>> T_check;
     T_check.resize(n,temp);
     for(int h =0;h<n;h++) {
@@ -158,6 +159,9 @@ int main() {
             }
         }
     }
+
+
+    //OUT
 
     cout << "MADE " << count << " ITEARTIONS\n\n";
     for(int i = 0 ;i < n ; i++){
