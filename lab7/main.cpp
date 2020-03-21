@@ -17,13 +17,20 @@ using namespace std;
 
 FILE *table1;
 FILE *table2;
+FILE *table3;
 double eps = 0.0000001;
 double x1_0 = -0.5;
 double x2_0 = 0.5;
 double x3_0 = 1.5;
+double n1 = -1.0;
+double n2 = 0.5;
+double n3 = 2.0;
 
 double F(double x){
 	return pow(x, 5.0) - 7.0*pow(x, 2.0) + 3.0;
+}
+double F1(double x){
+	return 5.0*pow(x, 4.0) - 14.0*x;
 }
 double PHI1(double x){
 	return pow((pow(x, 5.0) + 3.0)/7.0, 1.0/2.0);
@@ -109,14 +116,65 @@ void Iteration(){
 	}
 }
 
+void Newton(){
+	cout << setw(13) << "k" << setw(13) << "x(k)" << setw(14) << "x(k + 1)\n\n";
+	cout.precision(7);
+
+	int k;
+	double x_k, x_k1;
+
+	k = 0;
+	x_k = 100;
+	x_k1 = n1;
+	while(abs(x_k1 - x_k) > eps){
+		x_k = x_k1;
+		x_k1 = x_k - F(x_k)/F1(x_k);
+		cout << setw(12) << k << "|" <<  setw(12) << x_k << "|" <<  setw(12) << abs(x_k - x_k1) <<"\n";
+		k++;
+		fprintf(table3, "%d & %.7f & %.7f \\\\\n", k, x_k1, abs(x_k - x_k1));
+	}
+	
+	fprintf(table3, "\n\n");
+	k = 0;
+	x_k = 100;
+	x_k1 = n2;
+	cout << "\n\n";
+	while(abs(x_k1 - x_k) > eps){
+		x_k = x_k1;
+		x_k1 = x_k - F(x_k)/F1(x_k);
+		cout << setw(12) << k << "|" <<  setw(12) << x_k << "|" <<  setw(12) << abs(x_k - x_k1) <<"\n";
+		k++;
+		fprintf(table3, "%d & %.7f & %.7f \\\\\n", k, x_k1, abs(x_k - x_k1));
+	}
+	
+	fprintf(table3, "\n\n");
+	k = 0;
+	x_k = 100;
+	x_k1 = n3;
+	cout << "\n\n";
+	while(abs(x_k1 - x_k) > eps){
+		x_k = x_k1;
+		x_k1 = x_k - F(x_k)/F1(x_k);
+		cout << setw(12) << k << "|" <<  setw(12) << x_k << "|" <<  setw(12) << abs(x_k - x_k1) <<"\n";
+		k++;
+		fprintf(table3, "%d & %.7f & %.7f \\\\\n", k, x_k1, abs(x_k - x_k1));
+	}
+	fprintf(table3, "\n\n");
+
+	
+}
 int main(){
 	table1 = fopen("table1.txt", "w+");
 	table2 = fopen("table2.txt", "w+");
+	table3 = fopen("table3.txt", "w+");
 	if(table1 == NULL) return 1;
 
 	dechotomy();	
 	Iteration();
+	Newton();
 
 	fclose(table1);
 	fclose(table2);
+	fclose(table3);
+	return 0;
 }
