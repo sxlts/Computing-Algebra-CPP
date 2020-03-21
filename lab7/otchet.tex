@@ -2,14 +2,20 @@
 \usepackage[utf8]{inputenc}
 \usepackage[russian]{babel}
 \usepackage{graphicx}
+\usepackage{courier}
 \usepackage{pgfplots}
+\usepackage{listings}
 \usepackage[papersize={21cm,29.7cm}]{geometry}
-\author{Овчинников Никита 7 группа}
+\author {Овчинников Никита 7 группа}
 \begin{document}
 
 \begin{titlepage}
 \maketitle 
-\title Лабораторная работа № 1 «Численное решение нелинейных уравнений»
+\begin{center}
+\title \LARGE\textbf{Лабораторная работа № 1}
+
+\title \LARGE\textbf{«Численное решение нелинейных уравнений»}
+\end{center}
 \end{titlepage}
 
 \begin{center}
@@ -21,6 +27,10 @@
 ~
 
 $x^5 - 7*x^2 + 3 = 0$
+
+~
+
+Необходимо решить уравнение дихотомией, методом простой итерации, методом Ньютона, методом Хорд, провести сравнительный анализ.
 
 \newpage
 \begin{center}
@@ -36,7 +46,7 @@ $x^5 - 7*x^2 + 3 = 0$
 	xmin = -1.5, xmax = 2.5,
 	minor tick num = 1,
 	legend pos = north west,
-	samples = 100
+	samples = 1000
 ]
 \legend{
 	$x^5 - 7 * x^2 + 3$,
@@ -69,7 +79,7 @@ $x^5 - 7*x^2 + 3 = 0$
 \newpage
 
 \begin{center}
-	\huge\textbf{Дехотомия}
+	\huge\textbf{Дихотомия}
 \end{center}
 
 Для [-1, 0]:
@@ -152,7 +162,7 @@ $x = (7*x^2 -3)^{\frac{1}{5}}$
 	ymin = -1.5, ymax = 4.5,
 	minor tick num = 1,
 	legend pos = south east,
-	samples = 100
+	samples = 1000
 ]
 \legend{
 	$\sqrt{\frac{x^5 + 3}{7}}$,
@@ -194,7 +204,7 @@ $x = (7*x^2 -3)^{\frac{1}{5}}$
 	ymin = -2, ymax = 5,
 	minor tick num = 1,
 	legend pos = south east,
-	samples = 100
+	samples = 1000
 ]
 \legend{
 	$(\sqrt{\frac{x^5 + 3}{7}})'$,
@@ -316,7 +326,7 @@ k & $x_k$ & $\epsilon_k$\\
 	xmin = -1, xmax = 2,
 	minor tick num = 1,
 	legend pos = north west,
-	samples = 100
+	samples = 1000
 ]
 \legend{
 	$f^{(0)}(x)$,
@@ -354,7 +364,7 @@ k & $x_k$ & $\epsilon_k$\\
 
 Итерационный процесс:
 
-$x_{k+1} = x_{0} - \frac{f(x_{k})}{f'(x_{k})}$.
+$x_{k+1} = x_{k} - \frac{f(x_{k})}{f'(x_{k})}$.
 
 ~
 
@@ -391,4 +401,137 @@ k & $x_k$ & $\epsilon_k$\\
 \hline
 \end{tabular}
 
+\newpage
+\begin{center}
+	\huge\textbf{Метод Хорд}
+\end{center}
+
+Построим график функции и ее второй производной:
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+	xlabel = {$x$},
+	ylabel = {$y$},
+	width=12cm, height=8cm,
+	xmin = -1, xmax = 2,
+	minor tick num = 1,
+	legend pos = north west,
+	samples = 1000
+]
+\legend{
+	$f(x)$,
+	$f''(x)$
+};
+\draw[solid, help lines] (axis cs:-5,0) -- (axis cs:5,0);
+\addplot[solid, draw = blue, very thick] {x^5 - 7*x^2 + 3};
+\addplot[solid, draw = green, very thick] {20*x^3 - 14};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+~
+
+Для метода хорд существует две формулы :
+
+(1) $x_0 = b, x_{k+1} = x_k - \frac{f(x_k)}{f(x_k) - f(a)} * (x_k - a), k=0,1,2,...$.
+
+Если f''(a)*f(a) > 0.
+
+(2) $x_0 = a, x_{k+1} = x_k - \frac{f(x_k)}{f(b) - f(x_k)} * (b - x_k), k=0,1,2,...$.
+
+Если f''(a)*f(a) < 0.
+
+~
+
+Для промежутка [-1, 0] будем использовать формулу (1).
+
+Для промежутка [0, 0.75] будем использовать формулу (2).
+
+Для промежутка [1, 2] будем использовать формулу (2).
+
+~
+
+\begin{tabular}[t]{ |r|r r| }
+\hline
+k & $x_k$ & $\epsilon_k$\\
+\hline
+1 & -0.3750000 & 0.3750000 \\
+2 & -0.5540944 & 0.1790944 \\
+3 & -0.6155075 & 0.0614132 \\
+4 & -0.6344928 & 0.0189853 \\
+5 & -0.6401850 & 0.0056922 \\
+6 & -0.6418763 & 0.0016913 \\
+7 & -0.6423774 & 0.0005012 \\
+8 & -0.6425258 & 0.0001484 \\
+9 & -0.6425697 & 0.0000439 \\
+10 & -0.6425827 & 0.0000130 \\
+11 & -0.6425866 & 0.0000038 \\
+12 & -0.6425877 & 0.0000011 \\
+13 & -0.6425880 & 0.0000003 \\
+14 & -0.6425881 & 0.0000001 \\
+\hline
+\end{tabular}
+\begin{tabular}[t]{ |r|r r| }
+\hline
+k & $x_k$ & $\epsilon_k$\\
+\hline
+1 & 0.6080760 & 0.6080760 \\
+2 & 0.6668439 & 0.0587679 \\
+3 & 0.6690517 & 0.0022077 \\
+4 & 0.6691266 & 0.0000749 \\
+5 & 0.6691291 & 0.0000025 \\
+6 & 0.6691292 & 0.0000001 \\
+\hline
+\end{tabular}
+\begin{tabular}[t]{ |r|r r| }
+\hline
+k & $x_k$ & $\epsilon_k$\\
+\hline
+1 & 1.3000000 & 0.3000000 \\
+2 & 1.5956118 & 0.2956118 \\
+3 & 1.7534022 & 0.1577904 \\
+4 & 1.8070803 & 0.0536781 \\
+5 & 1.8220422 & 0.0149619 \\
+6 & 1.8259593 & 0.0039171 \\
+7 & 1.8269675 & 0.0010082 \\
+8 & 1.8272259 & 0.0002583 \\
+9 & 1.8272920 & 0.0000661 \\
+10 & 1.8273089 & 0.0000169 \\
+11 & 1.8273133 & 0.0000043 \\
+12 & 1.8273144 & 0.0000011 \\
+13 & 1.8273147 & 0.0000003 \\
+14 & 1.8273147 & 0.0000001 \\
+\hline
+\end{tabular}
+
+\newpage
+\begin{center}
+	\huge\textbf{Вывод:}
+\end{center}
+
+Исходя из результатов можно сказать что самый быстрый метод - метод Ньютона.
+
+Самый медленный - половинного деления.
+
+\newpage
+\begin{center}
+	\huge\textbf{Программа:}
+\end{center}
+
+\lstset{language=C++,
+	basicstyle=\tiny\ttfamily,
+	keywordstyle=\color{blue}\ttfamily,
+	stringstyle=\color{red}\ttfamily,
+	commentstyle=\color{green}\ttfamily,
+	morecomment=[l][\color{magenta}]{\#}
+}
+\lstinputlisting{main.cpp}
+
+\newpage
+\begin{center}
+	\huge\textbf{Вывод программы:}
+\end{center}
+
+\lstinputlisting{main.txt}
 \end{document}

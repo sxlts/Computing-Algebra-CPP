@@ -18,6 +18,7 @@ using namespace std;
 FILE *table1;
 FILE *table2;
 FILE *table3;
+FILE *table4;
 double eps = 0.0000001;
 double x1_0 = -0.5;
 double x2_0 = 0.5;
@@ -25,6 +26,12 @@ double x3_0 = 1.5;
 double n1 = -1.0;
 double n2 = 0.5;
 double n3 = 2.0;
+double a1 = -1.0;
+double b1 = 0;
+double a2 = 0;
+double b2 = 0.75;
+double a3 = 1;
+double b3 = 2.0;
 
 double F(double x){
 	return pow(x, 5.0) - 7.0*pow(x, 2.0) + 3.0;
@@ -160,21 +167,73 @@ void Newton(){
 		fprintf(table3, "%d & %.7f & %.7f \\\\\n", k, x_k1, abs(x_k - x_k1));
 	}
 	fprintf(table3, "\n\n");
-
-	
 }
+
+void Secant(){
+	cout << setw(13) << "k" << setw(13) << "x(k)" << setw(14) << "x(k + 1)\n\n";
+	cout.precision(7);
+
+	int k;
+	double x_k, x_k1;
+
+	k = 0;
+	x_k = 100;
+	x_k1 = b1;
+	while(abs(x_k1 - x_k) > eps){
+		x_k = x_k1;
+		x_k1 = x_k - F(x_k)*(x_k - a1)/(F(x_k) - F(a1));
+		cout << setw(12) << k << "|" <<  setw(12) << x_k << "|" <<  setw(12) << abs(x_k - x_k1) <<"\n";
+		k++;
+		fprintf(table4, "%d & %.7f & %.7f \\\\\n", k, x_k1, abs(x_k - x_k1));
+	}
+	
+	fprintf(table4, "\n\n");
+	k = 0;
+	x_k = 100;
+	x_k1 = a2;
+	cout << "\n\n";
+	while(abs(x_k1 - x_k) > eps){
+		x_k = x_k1;
+		x_k1 = x_k - F(x_k)*(b2 - x_k)/(F(b2) - F(x_k));
+		cout << setw(12) << k << "|" <<  setw(12) << x_k << "|" <<  setw(12) << abs(x_k - x_k1) <<"\n";
+		k++;
+		fprintf(table4, "%d & %.7f & %.7f \\\\\n", k, x_k1, abs(x_k - x_k1));
+	}
+	
+	fprintf(table4, "\n\n");
+	k = 0;
+	x_k = 100;
+	x_k1 = a3;
+	cout << "\n\n";
+	while(abs(x_k1 - x_k) > eps){
+		x_k = x_k1;
+		x_k1 = x_k - F(x_k)*(b3 - x_k)/(F(b3) - F(x_k));
+		cout << setw(12) << k << "|" <<  setw(12) << x_k << "|" <<  setw(12) << abs(x_k - x_k1) <<"\n";
+		k++;
+		fprintf(table4, "%d & %.7f & %.7f \\\\\n", k, x_k1, abs(x_k - x_k1));
+	}
+	fprintf(table4, "\n\n");
+}
+
 int main(){
 	table1 = fopen("table1.txt", "w+");
 	table2 = fopen("table2.txt", "w+");
 	table3 = fopen("table3.txt", "w+");
+	table4 = fopen("table4.txt", "w+");
 	if(table1 == NULL) return 1;
 
+	cout << "dechotomy:\n";
 	dechotomy();	
+	cout << "Iteration:\n";
 	Iteration();
+	cout << "Newton:\n";
 	Newton();
+	cout << "Secant:\n";
+	Secant();
 
 	fclose(table1);
 	fclose(table2);
 	fclose(table3);
+	fclose(table4);
 	return 0;
 }
