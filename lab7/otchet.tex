@@ -3,6 +3,7 @@
 \usepackage[russian]{babel}
 \usepackage{graphicx}
 \usepackage{pgfplots}
+\usepackage[papersize={21cm,29.7cm}]{geometry}
 \author{Овчинников Никита 7 группа}
 \begin{document}
 
@@ -12,7 +13,7 @@
 \end{titlepage}
 
 \begin{center}
-	Постановка задачи
+	\huge\textbf{Постановка задачи}
 \end{center}
 
 Условие:
@@ -21,34 +22,50 @@
 
 $x^5 - 7*x^2 + 3 = 0$
 
-~
+\newpage
+\begin{center}
+	\huge\textbf{Решение}
+\end{center}
 
 \begin{center}
 \begin{tikzpicture}
 \begin{axis}[
-	title = $x^5 - 7 * x^2 + 3$,
 	xlabel = {$x$},
 	ylabel = {$y$},
-	xmin = -1,
-	xmax = 3,
-	grid = major,
-	minor tick num = 1
+	width=12cm, height=12cm,
+	xmin = -1.5, xmax = 2.5,
+	minor tick num = 1,
+	legend pos = north west,
+	samples = 1000
 ]
-\addplot[blue] {x^5 - 7 * x^2 + 3};
+\legend{
+	$x^5 - 7 * x^2 + 3$,
+	$7*x^2 - 3$,
+	$x^5$
+};
+\draw[solid, help lines] (axis cs:-5,0) -- (axis cs:5,0);
+\draw[solid, help lines] (axis cs:0,-500) -- (axis cs:0,500);
+\addplot[solid, draw = black] {x^5 - 7 * x^2 + 3};
+\addplot[solid, draw = red] {7 * x^2 - 3};
+\addplot[solid, draw = green] {x^5};
 \end{axis}
 \end{tikzpicture}
 \end{center}
 
-~
-
 Отделим корни: [-1, 0], [0, 1], [1, 2]
 
-~
+\newpage
+
+\begin{center}
+	\huge\textbf{Дехотомия}
+\end{center}
 
 Для [-1, 0]:
 \begin{center}
-\begin{tabular}{ r r r r r r r r }
+\begin{tabular}{ |r|r r r r r r r| }
+\hline
 k & $a_k$ & $b_k$ & $mid_k$ & $f(l_k)$ & $f(r_k)$ & $f(mid_k)$ & $r_k-l_k$\\ 	
+\hline
 0 & -1.000 & 0.000 & -0.500 & -5.000 & 3.000 & 1.219 & 1.000 \\
 1 & -1.000 & -0.500 & -0.750 & -5.000 & 1.219 & -1.175 & 0.500 \\
 2 & -0.750 & -0.500 & -0.625 & -1.175 & 1.219 & 0.170 & 0.250 \\
@@ -58,13 +75,16 @@ k & $a_k$ & $b_k$ & $mid_k$ & $f(l_k)$ & $f(r_k)$ & $f(mid_k)$ & $r_k-l_k$\\
 6 & -0.656 & -0.641 & -0.648 & -0.136 & 0.019 & -0.058 & 0.016 \\
 7 & -0.648 & -0.641 & -0.645 & -0.058 & 0.019 & -0.019 & 0.008 \\
 8 & -0.645 & -0.641 & -0.643 & -0.019 & 0.019 & 0.000 & 0.004 \\
+\hline
 \end{tabular}
 \end{center}
 
 Для [0, 1]:
 \begin{center}
-\begin{tabular}{ r r r r r r r r }
+\begin{tabular}{ |r|r r r r r r r| }
+\hline
 k & $a_k$ & $b_k$ & $mid_k$ & $f(l_k)$ & $f(r_k)$ & $f(mid_k)$ & $r_k-l_k$\\
+\hline
 0 & 0.000 & 1.000 & 0.500 & 3.000 & -3.000 & 1.281 & 1.000 \\
 1 & 0.500 & 1.000 & 0.750 & 1.281 & -3.000 & -0.700 & 0.500 \\
 2 & 0.500 & 0.750 & 0.625 & 1.281 & -0.700 & 0.361 & 0.250 \\
@@ -73,13 +93,16 @@ k & $a_k$ & $b_k$ & $mid_k$ & $f(l_k)$ & $f(r_k)$ & $f(mid_k)$ & $r_k-l_k$\\
 5 & 0.656 & 0.688 & 0.672 & 0.107 & -0.155 & -0.023 & 0.031 \\
 6 & 0.656 & 0.672 & 0.664 & 0.107 & -0.023 & 0.042 & 0.016 \\
 7 & 0.664 & 0.672 & 0.668 & 0.042 & -0.023 & 0.010 & 0.008 \\
+\hline
 \end{tabular}
 \end{center}
 
 Для [1, 2]:
 \begin{center}
-\begin{tabular}{ r r r r r r r r }
+\begin{tabular}{ |r|r r r r r r r| }
+\hline
 k & $a_k$ & $b_k$ & $mid_k$ & $f(l_k)$ & $f(r_k)$ & $f(mid_k)$ & $r_k-l_k$\\
+\hline
 0 & 1.000 & 2.000 & 1.500 & -3.000 & 7.000 & -5.156 & 1.000 \\
 1 & 1.500 & 2.000 & 1.750 & -5.156 & 7.000 & -2.024 & 0.500 \\
 2 & 1.750 & 2.000 & 1.875 & -2.024 & 7.000 & 1.565 & 0.250 \\
@@ -90,24 +113,151 @@ k & $a_k$ & $b_k$ & $mid_k$ & $f(l_k)$ & $f(r_k)$ & $f(mid_k)$ & $r_k-l_k$\\
 7 & 1.820 & 1.828 & 1.824 & -0.209 & 0.024 & -0.093 & 0.008 \\
 8 & 1.824 & 1.828 & 1.826 & -0.093 & 0.024 & -0.034 & 0.004 \\
 9 & 1.826 & 1.828 & 1.827 & -0.034 & 0.024 & -0.005 & 0.002 \\
+\hline
 \end{tabular}
 \end{center}
+
+\newpage
+\begin{center}
+	\huge\textbf{Метод простой итерации}
+\end{center}
+
+Приведем функцию к виду:
+
+$x = \sqrt{\frac{x^5 + 3}{7}}$
+и
+$x = (7*x^2 -3)^{\frac{1}{5}}$
+
+~
 
 \begin{center}
 \begin{tikzpicture}
 \begin{axis}[
-	title = $x^5$ and $7 * x^2 - 3$,
 	xlabel = {$x$},
 	ylabel = {$y$},
-	xmin = -1,
-	xmax = 3,
-	grid = major,
-	minor tick num = 1
+	width=12cm, height=7cm,
+	xmin = -2, xmax = 3,
+	ymin = -1.5, ymax = 4.5,
+	minor tick num = 1,
+	legend pos = south east,
+	samples = 1000
 ]
-\addplot[blue] {7 * x^2 - 3};
-\addplot[red] {x^5};
+\legend{
+	$\sqrt{\frac{x^5 + 3}{7}}$,
+	$(7*x^2 -3)^{\frac{1}{5}}$
+};
+\draw[solid, help lines] (axis cs:-5,0) -- (axis cs:5,0);
+\draw[solid, help lines] (axis cs:0,-5) -- (axis cs:0,5);
+\addplot[solid, draw = blue, domain=(-3^(1/5)):3] {sqrt((x^5 + 3)/7)};
+\addplot[solid, draw = red, domain=(-2):sqrt(3)/(-7)] {(7*x^2 - 3)^(1/5)};
+\addplot[solid, draw = red, domain=sqrt(3)/(7):3] {(7*x^2 - 3)^(1/5)};
 \end{axis}
 \end{tikzpicture}
 \end{center}
+
+Исследуем на сходимость:
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+	xlabel = {$x$},
+	ylabel = {$y$},
+	width=12cm, height=8cm,
+	xmin = -2, xmax = 3,
+	ymin = -2, ymax = 5,
+	minor tick num = 1,
+	legend pos = south east,
+	samples = 1000
+]
+\legend{
+	$(\sqrt{\frac{x^5 + 3}{7}})'$,
+	$((7*x^2 -3)^{\frac{1}{5}})'$
+};
+\draw[solid, help lines] (axis cs:-5,0) -- (axis cs:5,0);
+\draw[solid, help lines] (axis cs:0,-5) -- (axis cs:0,5);
+\draw[dashed, help lines] (axis cs:-5,1) -- (axis cs:5,1);
+\draw[dashed, help lines] (axis cs:-1,-5) -- (axis cs:-1,5);
+\draw[dashed, help lines] (axis cs:0,-5) -- (axis cs:0,5);
+\draw[dashed, help lines] (axis cs:1,-5) -- (axis cs:1,5);
+\draw[dashed, help lines] (axis cs:2,-5) -- (axis cs:2,5);
+\addplot[solid, draw = blue] {1/2 * (1/sqrt((x^5 + 3) / 7)) * (5 * x^4)/7};
+\addplot[solid, draw = red, domain=0.5:5] {1/5 * 7*2*x * (7*x^2 - 3)^(-4/5)};
+\addplot[solid, draw = red, domain=-5:0.5] {1/5 * 7*2*x * (7*x^2 - 3)^(-4/5)};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+Условие сходимости :  $|\varphi'(x)| < 1$
+
+~
+
+Итерационный процесс:
+
+$x_{k+1} = \varphi(x_{k}) * sign(x_{k})$
+
+~
+
+Как можно заметить, 
+$x = \sqrt{\frac{x^5 + 3}{7}}$
+будет сходиться на отрезке [-1, 1], а 
+$x = (7*x^2 -3)^{\frac{1}{5}}$
+на отрезке  [1, 2].
+
+~
+
+\begin{tabular}[t]{ |r|r r| }
+\hline
+k & $x_k$ & $\epsilon_k$\\
+\hline
+1 & -0.6512351 & 0.1512351 \\
+2 & -0.6417459 & 0.0094892 \\
+3 & -0.6426678 & 0.0009219 \\
+4 & -0.6425806 & 0.0000872 \\
+5 & -0.6425889 & 0.0000083 \\
+6 & -0.6425881 & 0.0000008 \\
+7 & -0.6425882 & 0.0000001 \\
+\hline
+\end{tabular}
+\begin{tabular}[t]{ |r|r r| }
+\hline
+k & $x_k$ & $\epsilon_k$\\
+\hline
+1 & 0.6580545 & 0.1580545 \\
+2 & 0.6679819 & 0.0099274 \\
+3 & 0.6690069 & 0.0010250 \\
+4 & 0.6691161 & 0.0001093 \\
+5 & 0.6691278 & 0.0000117 \\
+6 & 0.6691291 & 0.0000013 \\
+7 & 0.6691292 & 0.0000001 \\
+8 & 0.6691292 & 0.0000000 \\
+\hline
+\end{tabular}
+\begin{tabular}[t]{ |r|r r| }
+\hline
+k & $x_k$ & $\epsilon_k$\\
+\hline
+1 & 1.6638035 & 0.1638035 \\
+2 & 1.7492447 & 0.0854411 \\
+3 & 1.7908252 & 0.0415806 \\
+4 & 1.8104276 & 0.0196024 \\
+5 & 1.8195351 & 0.0091075 \\
+6 & 1.8237383 & 0.0042032 \\
+7 & 1.8256722 & 0.0019339 \\
+8 & 1.8265607 & 0.0008885 \\
+9 & 1.8269687 & 0.0004080 \\
+10 & 1.8271559 & 0.0001873 \\
+11 & 1.8272419 & 0.0000859 \\
+12 & 1.8272813 & 0.0000394 \\
+13 & 1.8272994 & 0.0000181 \\
+14 & 1.8273077 & 0.0000083 \\
+15 & 1.8273115 & 0.0000038 \\
+16 & 1.8273133 & 0.0000017 \\
+17 & 1.8273141 & 0.0000008 \\
+18 & 1.8273144 & 0.0000004 \\
+19 & 1.8273146 & 0.0000002 \\
+20 & 1.8273147 & 0.0000001 \\
+\hline
+\end{tabular}
+
 
 \end{document}
