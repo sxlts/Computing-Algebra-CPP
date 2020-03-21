@@ -1,13 +1,21 @@
 # Computing-Algebra-CPP
 
-Lab1 - **Gauss method** *("/system of equations")*
+Systems of linear equations:
+=
 
-Lab2 - **tridiagonal matrix algorithm** *("/tridiagonal")*
+Lab1 - **Gauss method** *("SLE/system of equations")*
 
-Lab3 - **Relaxation method** *("/relaxation")*
+Lab2 - **tridiagonal matrix algorithm** *("SLE/tridiagonal")*
 
-Lab4 - **Gradient Descent method** *("/Gradient descent")*
+Lab3 - **Relaxation method** *("SLE/relaxation")*
 
-Lab5 - **Power Iteration method** *("/Power iteration")*
+Lab4 - **Gradient Descent method** *("SLE/Gradient descent")*
 
-Lab6 - **Jacobi eigenvector/value** *("/Jacobi eigenvector")*
+Lab5 - **Power Iteration method** *("SLE/Power iteration")*
+
+Lab6 - **Jacobi eigenvector/value** *("SLE/Jacobi eigenvector")*
+
+Not linear equations:
+=
+
+Lab7 - **Dichotomy, Fixed-point iteration, Newton method, Secant method** *(NLE/lab7)*
