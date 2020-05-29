@@ -19,3 +19,5 @@ Not linear equations:
 =
 
 Lab7 - **Dichotomy, Fixed-point iteration, Newton method, Secant method** *(NLE/lab7)*
+
+Lab8 - **Polynomic aproximation** *(NLE/lab8)*
